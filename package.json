@@ -1,0 +1,34 @@
+{
+    "name": "kissakuvasto",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "browserify -t babelify -e src/index.js -o public/app.js",
+        "dev": "watchify -t babelify -e src/index.js -o public/app.js",
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "kissat",
+        "Javascript",
+        "React",
+        "React Hooks"
+    ],
+    "author": "TSL",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/core": "^7.14.6",
+        "@babel/preset-env": "^7.14.7",
+        "@babel/preset-react": "^7.14.5",
+        "babelify": "^10.0.0",
+        "browserify": "^17.0.0",
+        "watchify": "^4.0.0"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "jquery": "^3.6.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2"
+    }
+}
