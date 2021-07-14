@@ -7,24 +7,45 @@ const ReactDOM = require('react-dom');
 const $ = require('jquery');
 
 function App(props) {
-    const [state, dispatch] = React.useReducer(reducer, 0);
+    const [state, dispatch] = React.useReducer(reducer, {catNumber: 0, catNames: undefined});
 
-    function reducer(catNumber, message) {
-        switch (message) {
+    React.useEffect(() => {
+        $.getJSON('/kissat.json', data => {
+            dispatch({command: 'init', data});
+        });
+    }, []);
+
+    function reducer(state, message) {
+        const newState = {...state};
+        const NUM_CATS = 6;
+        switch (message.command) {
+            case 'init':
+                newState.catNames = message.data;
+                break;
             case '+':
-                return (catNumber + 1) % 5;
+                newState.catNumber++;
+                if (newState.catNumber >= NUM_CATS) {
+                    newState.catNumber = 0;
+                }
+                break;
             case '-':
-                return (catNumber + 4) % 5;
+                newState.catNumber--;
+                if (newState.catNumber <= 0) {
+                    newState.catNumber = NUM_CATS - 1;
+                }
+                break;
             default:
-                return new Error(`Unknown message: ${message}`);
+                throw new Error(`Unknown message: ${message}`);
         }
+        return newState;
     }
 
     return <div>
-        <CatImage n={state}/>
+        <CatImage n={state.catNumber}/>
+        <h2>{state.catNames ? state.catNames[state.catNumber] : 'Lataa ...'}</h2>
         <div style={{clear: "both"}}/>
-        <button onClick={() => dispatch('-')}>Edellinen</button>
-        <button onClick={() => dispatch('+')}>Seuraava</button>
+        <button onClick={() => dispatch({command: '-'})}>Edellinen</button>
+        <button onClick={() => dispatch({command: '+'})}>Seuraava</button>
     </div>;
 }
 
