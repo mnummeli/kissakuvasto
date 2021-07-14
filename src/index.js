@@ -17,7 +17,7 @@ function App(props) {
 
     function reducer(state, message) {
         const newState = {...state};
-        const NUM_CATS = 6;
+        const NUM_CATS = newState.catNames ? newState.catNames.length : 0;
         switch (message.command) {
             case 'init':
                 newState.catNames = message.data;
