@@ -30,7 +30,7 @@ function App(props) {
                 break;
             case '-':
                 newState.catNumber--;
-                if (newState.catNumber <= 0) {
+                if (newState.catNumber < 0) {
                     newState.catNumber = NUM_CATS - 1;
                 }
                 break;
