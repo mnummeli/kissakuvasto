@@ -72,7 +72,7 @@ function Clock(props) {
     useEffect(() => {
         const interval = setInterval(dispatch, 100);
         return () => {
-            deleteInterval(interval);
+            clearInterval(interval);
         };
     }, []);
     return <h3>{dateFormat(state, "isoDateTime")}</h3>;
